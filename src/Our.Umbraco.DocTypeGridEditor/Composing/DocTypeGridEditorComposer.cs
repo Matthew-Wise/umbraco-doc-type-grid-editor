@@ -14,6 +14,7 @@ namespace Our.Umbraco.DocTypeGridEditor.Composing
         {
             composition.DocTypeGridEditorValueProcessors().Append<UmbracoTagsValueProcessor>();
             composition.DataValueReferenceFactories().Append<DocTypeGridEditorDataValueReference>();
+            composition.Components().Append<DocTypeGridEditorComponent>();
         }
     }
 }

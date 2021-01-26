@@ -36,22 +36,18 @@
             },
             getEditorMarkupForDocTypePartial: function (pageId, id, editorAlias, contentTypeAlias, value, viewPath, previewViewPath, published, culture) {
                 var url = Umbraco.Sys.ServerVariables.umbracoSettings.umbracoPath + "/backoffice/DocTypeGridEditorApi/DocTypeGridEditorApi/GetPreviewMarkup?dtgePreview=1&pageId=" + pageId;
-                return $http({
-                    method: 'POST',
-                    url: url,
-                    data: $.param({
-                        id: id,
-                        editorAlias: editorAlias,
-                        contentTypeAlias: contentTypeAlias,
-                        value: JSON.stringify(value),
-                        viewPath: viewPath,
-                        previewViewPath: previewViewPath,
-                        culture: culture
-                    }),
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                });
+                var data = [
+                    { 'key': 'id', 'value': id },
+                    { 'key': 'editorAlias', 'value': editorAlias },
+                    { 'key': 'contentTypeAlias', 'value': contentTypeAlias },
+                    { 'key': 'value', 'value': JSON.stringify(value) },
+                    { 'key': 'viewPath', 'value': viewPath },
+                    { 'key': 'previewViewPath', 'value': previewViewPath }
+                ];
+                if (culture) {
+                    data.push({ 'key': 'culture', 'value': culture });
+                }
+                return umbRequestHelper.postMultiPartRequest(url, data);
             }
         };
     });
